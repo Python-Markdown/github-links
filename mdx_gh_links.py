@@ -37,8 +37,8 @@ from markdown.util import etree
 
 URL_BASE = 'https://github.com'
 RE_PARTS = dict(
-    USER = r'[-_\w]+',
-    PROJECT = r'[-_.\w]+'
+    USER=r'[-_\w]+',
+    PROJECT=r'[-_.\w]+'
 )
 
 

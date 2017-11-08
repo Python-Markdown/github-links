@@ -61,15 +61,15 @@ of this option will be used.
 This extension implements shorthand to specify links to GitHub in various ways.
 
 All links in the generated HTML are assigned a `gh-link` class as well as a class
-unique to that type of link. See each type for the specific class assigned. 
+unique to that type of link. See each type for the specific class assigned.
 
 ### Users
 
-*Not yet implemented*
+This feature is *not yet implemented*.
 
 ### Projects
 
-*Not yet implemented*
+This feature is *not yet implemented*.
 
 ### Issues
 
@@ -97,8 +97,7 @@ The following table provides various examples (with the defaults set as
 
 ### Commits
 
-*Not yet implemented*
-
+This feature is *not yet implemented*.
 
 ## License
 
