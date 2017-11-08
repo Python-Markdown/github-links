@@ -98,3 +98,17 @@ The following table provides various examples (with the defaults set as
 ### Commits
 
 *Not yet implemented*
+
+
+## License
+
+The Python-Markdown Github-Links Extension is licended under the [BSD License] as
+defined in `LICENSE`.
+
+[BSD License]: http://opensource.org/licenses/BSD-3-Clause
+
+## Change Log
+
+### Version 0.0.1 (2017/11/??)
+
+The initial release.
