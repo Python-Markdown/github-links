@@ -63,13 +63,29 @@ This extension implements shorthand to specify links to GitHub in various ways.
 All links in the generated HTML are assigned a `gh-link` class as well as a class
 unique to that type of link. See each type for the specific class assigned.
 
-### Users
+### Mentions
 
-This feature is *not yet implemented*.
+Link directly to a GitHub user, organization or project. Note that no
+verification is made that an actual user, organization or project exists. As the
+syntax does not differentiate between users and organizations, all organizations
+are assumed to be users. However, this assumption is only reflected in the
+title of a link.
 
-### Projects
+Mentions use the format `@{user}` to link to a user or organization and
+`@{user}/{project}` to link to a project. The defaults defined in the
+configuration options are ignored by mentions. An mention may be escaped by
+adding a backslash immediately before the at sign (`@`).
 
-This feature is *not yet implemented*.
+All mentions are assigned the `gh-mention` class.
+
+The following table provides some examples:
+
+| shorthand  | href                         | rendered result                                                                     |
+| ---------- | -----------------------------| ------------------------------------------------------------------|
+| `@foo`     | `https://github.com/foo`     | [@foo](https://github.com/foo "GitHub User: @foo")                |
+| `@foo/bar` | `https://github.com/foo/bar` | [@foo/bar](https://github.com/foo/bar "GitHub Project: @foo/bar") |
+| `\@123`    |                              | @foo                                                              |
+| `\@foo/bar |                              | @foo/bar                                                          |
 
 ### Issues
 
@@ -81,19 +97,19 @@ properly redirect an issue URL to a PR URL if appropriate.
 Issue links use the format `#{num}` or `{user}/{project}#{num}`. `{num}` is the
 number assigned to the issue or PR. `{user}` and `{project}` will use the
 defaults defined in the configuration options if not provided. An issue link may
-be escaped by adding a backslash immediately before the hash mark.
+be escaped by adding a backslash immediately before the hash mark (`#`).
 
 All issue links are assigned the `gh-issue` class.
 
 The following table provides various examples (with the defaults set as
 `user='user', project='project'`):
 
-| shorthand         | href                                         | rendered result                                                                     |
-| ----------------- | -------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `#123`            | `https://github.com/user/project/issues/123` | [#123](https://github.com/user/project/issues/123 "GitHub Issue user/project #123") |
-| `foo/bar#123`     | `https://github.com/foo/bar/issues/123`      | [foo/bar#123](https://github.com/foo/bar/issues/123 "GitHub Issue foo/bar #123")    |
-| `\#123` (escaped) |                                              | #123                                                                                |
-| `foo/bar\#123`    |                                              | foo/bar#123                                                                         |
+| shorthand      | href                                         | rendered result                                                                     |
+| -------------- | -------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `#123`         | `https://github.com/user/project/issues/123` | [#123](https://github.com/user/project/issues/123 "GitHub Issue user/project #123") |
+| `foo/bar#123`  | `https://github.com/foo/bar/issues/123`      | [foo/bar#123](https://github.com/foo/bar/issues/123 "GitHub Issue foo/bar #123")    |
+| `\#123`        |                                              | #123                                                                                |
+| `foo/bar\#123` |                                              | foo/bar#123                                                                         |
 
 ### Commits
 

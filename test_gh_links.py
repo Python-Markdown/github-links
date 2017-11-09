@@ -45,6 +45,7 @@ class TestGithubLinks(unittest.TestCase):
         output = markdown(source, extensions=[GithubLinks(**configs)])
         self.assertMultiLineEqual(output, expected)
 
+    # Issue Tests
     def test_issue(self):
         self.assertMarkdownRenders(
             'Issue #123.',
@@ -99,6 +100,51 @@ class TestGithubLinks(unittest.TestCase):
         self.assertMarkdownRenders(
             'Issue Organization/Project\#123.',
             '<p>Issue Organization/Project#123.</p>',
+        )
+
+    # Mention Tests
+    def test_mention_user(self):
+        self.assertMarkdownRenders(
+            'User @foo.',
+            '<p>User <a class="gh-link gh-mention" '
+            'href="https://github.com/foo" '
+            'title="GitHub User: @foo">@foo</a>.</p>',
+        )
+
+    def test_mention_complex_user(self):
+        self.assertMarkdownRenders(
+            'User @Foo_Bar-42.',
+            '<p>User <a class="gh-link gh-mention" '
+            'href="https://github.com/Foo_Bar-42" '
+            'title="GitHub User: @Foo_Bar-42">@Foo_Bar-42</a>.</p>',
+        )
+
+    def test_escape_mention_user(self):
+        self.assertMarkdownRenders(
+            'User \@foo.',
+            '<p>User @foo.</p>',
+        )
+
+    def test_mention_project(self):
+        self.assertMarkdownRenders(
+            'User @foo/bar.',
+            '<p>User <a class="gh-link gh-mention" '
+            'href="https://github.com/foo/bar" '
+            'title="GitHub Project: @foo/bar">@foo/bar</a>.</p>',
+        )
+
+    def test_mention_project_complex(self):
+        self.assertMarkdownRenders(
+            'User @foo/bar_baz-42.0.',
+            '<p>User <a class="gh-link gh-mention" '
+            'href="https://github.com/foo/bar_baz-42.0" '
+            'title="GitHub Project: @foo/bar_baz-42.0">@foo/bar_baz-42.0</a>.</p>',
+        )
+
+    def test_escape_mention_project(self):
+        self.assertMarkdownRenders(
+            'User \@foo/bar.',
+            '<p>User @foo/bar.</p>',
         )
 
 
