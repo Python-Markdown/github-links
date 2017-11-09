@@ -40,7 +40,7 @@ class TestGithubLinks(unittest.TestCase):
 
     def assertMarkdownRenders(self, source, expected, **kwargs):
         'Test that source Markdown text renders to expected output.'
-        configs = {'user': 'Python-Markdown', 'project': 'github-links'}
+        configs = {'user': 'Python-Markdown', 'repo': 'github-links'}
         configs.update(kwargs)
         output = markdown(source, extensions=[GithubLinks(**configs)])
         self.assertMultiLineEqual(output, expected)
@@ -68,26 +68,26 @@ class TestGithubLinks(unittest.TestCase):
             '<p>Issue #notanissue.</p>',
         )
 
-    def test_issue_with_project(self):
+    def test_issue_with_repo(self):
         self.assertMarkdownRenders(
-            'Issue Organization/Project#123.',
+            'Issue Organization/Repo#123.',
             '<p>Issue <a class="gh-link gh-issue" '
-            'href="https://github.com/Organization/Project/issues/123" '
-            'title="GitHub Issue Organization/Project #123">Organization/Project#123</a>.</p>',
+            'href="https://github.com/Organization/Repo/issues/123" '
+            'title="GitHub Issue Organization/Repo #123">Organization/Repo#123</a>.</p>',
         )
 
-    def test_issue_leading_zero_with_project(self):
+    def test_issue_leading_zero_with_repo(self):
         self.assertMarkdownRenders(
-            'Issue Organization/Project#012.',
+            'Issue Organization/Repo#012.',
             '<p>Issue <a class="gh-link gh-issue" '
-            'href="https://github.com/Organization/Project/issues/12" '
-            'title="GitHub Issue Organization/Project #12">Organization/Project#012</a>.</p>',
+            'href="https://github.com/Organization/Repo/issues/12" '
+            'title="GitHub Issue Organization/Repo #12">Organization/Repo#012</a>.</p>',
         )
 
-    def test_non_issue_with_project(self):
+    def test_non_issue_with_repo(self):
         self.assertMarkdownRenders(
-            'Issue Organization/Project#notanissue.',
-            '<p>Issue Organization/Project#notanissue.</p>',
+            'Issue Organization/Repo#notanissue.',
+            '<p>Issue Organization/Repo#notanissue.</p>',
         )
 
     def test_escaped_issue(self):
@@ -96,10 +96,10 @@ class TestGithubLinks(unittest.TestCase):
             '<p>Issue #123.</p>',
         )
 
-    def test_escaped_issue_with_project(self):
+    def test_escaped_issue_with_repo(self):
         self.assertMarkdownRenders(
-            'Issue Organization/Project\#123.',
-            '<p>Issue Organization/Project#123.</p>',
+            'Issue Organization/Repo\#123.',
+            '<p>Issue Organization/Repo#123.</p>',
         )
 
     # Mention Tests
@@ -125,23 +125,23 @@ class TestGithubLinks(unittest.TestCase):
             '<p>User @foo.</p>',
         )
 
-    def test_mention_project(self):
+    def test_mention_repo(self):
         self.assertMarkdownRenders(
             'User @foo/bar.',
             '<p>User <a class="gh-link gh-mention" '
             'href="https://github.com/foo/bar" '
-            'title="GitHub Project: @foo/bar">@foo/bar</a>.</p>',
+            'title="GitHub Repository: @foo/bar">@foo/bar</a>.</p>',
         )
 
-    def test_mention_project_complex(self):
+    def test_mention_repo_complex(self):
         self.assertMarkdownRenders(
             'User @foo/bar_baz-42.0.',
             '<p>User <a class="gh-link gh-mention" '
             'href="https://github.com/foo/bar_baz-42.0" '
-            'title="GitHub Project: @foo/bar_baz-42.0">@foo/bar_baz-42.0</a>.</p>',
+            'title="GitHub Repository: @foo/bar_baz-42.0">@foo/bar_baz-42.0</a>.</p>',
         )
 
-    def test_escape_mention_project(self):
+    def test_escape_mention_repo(self):
         self.assertMarkdownRenders(
             'User \@foo/bar.',
             '<p>User @foo/bar.</p>',
@@ -165,7 +165,7 @@ class TestGithubLinks(unittest.TestCase):
             'title="GitHub Commit: foo/github-links@15abb8b3b02df0e380e9b4c71f3bd206c9751a93"''>foo@15abb8b</a>.</p>',
         )
 
-    def test_commit_user_project(self):
+    def test_commit_user_repo(self):
         self.assertMarkdownRenders(
             'Commit foo/bar@a75944f869d728ca9bc5472daf3f249b6c341308.',
             '<p>Commit <a class="gh-link gh-commit" '

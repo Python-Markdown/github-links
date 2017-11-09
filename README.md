@@ -1,7 +1,7 @@
 # Python-Markdown Github-Links Extension
 
-An extension to Python-Markdown which adds support for a shorthand for GitHub
-specific links.
+An extension to Python-Markdown which adds support for shorthand links to GitHub
+users, repositories, issues and commits.
 
 ## Installation
 
@@ -31,7 +31,7 @@ markdown.markdown(
     src,
     extensions=['mdx_gh_links'],
     extension_configs={
-        'mdx_gh_links': {'user': 'foo', 'project': 'bar'}
+        'mdx_gh_links': {'user': 'foo', 'repo': 'bar'}
     }
 )
 ```
@@ -41,7 +41,7 @@ markdown.markdown(
 
 ```python
 from mdx_gh_links import GithubLinks
-markdown.markdown(src, extensions=[GithubLinks(user='foo', project='bar')])
+markdown.markdown(src, extensions=[GithubLinks(user='foo', repo='bar')])
 ```
 
 The following configuration options are available:
@@ -51,10 +51,10 @@ The following configuration options are available:
 A GitHub user name or organization. If no user or organization is specified in
 a GitHub link, then the value of this option will be used.
 
-#### project
+#### repo
 
-A GitHub project. If no project is specified in a GitHub link, then the value
-of this option will be used.
+A GitHub repository. If no repository is specified in a GitHub link, then the
+value of this option will be used.
 
 ## Syntax
 
@@ -65,14 +65,14 @@ unique to that type of link. See each type for the specific class assigned.
 
 ### Mentions
 
-Link directly to a GitHub user, organization or project. Note that no
-verification is made that an actual user, organization or project exists. As the
-syntax does not differentiate between users and organizations, all organizations
-are assumed to be users. However, this assumption is only reflected in the
-title of a link.
+Link directly to a GitHub user, organization or repository. Note that no
+verification is made that an actual user, organization or repository exists. As
+the syntax does not differentiate between users and organizations, all
+organizations are assumed to be users. However, this assumption is only
+reflected in the title of a link.
 
 Mentions use the format `@{user}` to link to a user or organization and
-`@{user}/{project}` to link to a project. The defaults defined in the
+`@{user}/{repo}` to link to a repository. The defaults defined in the
 configuration options are ignored by mentions. A mention may be escaped by
 adding a backslash immediately before the at sign (`@`).
 
@@ -81,11 +81,11 @@ All mentions are assigned the `gh-mention` class.
 The following table provides some examples:
 
 | shorthand   | href                         | rendered result                                                                     |
-| ----------- | ---------------------------- | ------------------------------------------------------------------|
-| `@foo`      | `https://github.com/foo`     | [@foo](https://github.com/foo "GitHub User: @foo")                |
-| `@foo/bar`  | `https://github.com/foo/bar` | [@foo/bar](https://github.com/foo/bar "GitHub Project: @foo/bar") |
-| `\@123`     |                              | @foo                                                              |
-| `\@foo/bar` |                              | @foo/bar                                                          |
+| ----------- | ---------------------------- | -------------------------------------------------------------------- |
+| `@foo`      | `https://github.com/foo`     | [@foo](https://github.com/foo "GitHub User: @foo")                   |
+| `@foo/bar`  | `https://github.com/foo/bar` | [@foo/bar](https://github.com/foo/bar "GitHub Repository: @foo/bar") |
+| `\@123`     |                              | @foo                                                                 |
+| `\@foo/bar` |                              | @foo/bar                                                             |
 
 ### Issues
 
@@ -94,19 +94,19 @@ is made that an actual issue or PR exists. As the syntax does not differentiate
 between Issues and PRs, all URLs point to "issues". Fortunately, GitHub will
 properly redirect an issue URL to a PR URL if appropriate.
 
-Issue links use the format `#{num}` or `{user}/{project}#{num}`. `{num}` is the
-number assigned to the issue or PR. `{user}` and `{project}` will use the
+Issue links use the format `#{num}` or `{user}/{repo}#{num}`. `{num}` is the
+number assigned to the issue or PR. `{user}` and `{repo}` will use the
 defaults defined in the configuration options if not provided. An issue link may
 be escaped by adding a backslash immediately before the hash mark (`#`).
 
 All issue links are assigned the `gh-issue` class.
 
 The following table provides various examples (with the defaults set as
-`user='user', project='project'`):
+`user='user', repo='repo'`):
 
 | shorthand      | href                                         | rendered result                                                                     |
 | -------------- | -------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `#123`         | `https://github.com/user/project/issues/123` | [#123](https://github.com/user/project/issues/123 "GitHub Issue user/project #123") |
+| `#123`         | `https://github.com/user/repo/issues/123`    | [#123](https://github.com/user/repo/issues/123 "GitHub Issue user/repo #123")       |
 | `foo/bar#123`  | `https://github.com/foo/bar/issues/123`      | [foo/bar#123](https://github.com/foo/bar/issues/123 "GitHub Issue foo/bar #123")    |
 | `\#123`        |                                              | #123                                                                                |
 | `foo/bar\#123` |                                              | foo/bar#123                                                                         |
@@ -117,21 +117,21 @@ Link directly to a GitHub Commit. Note that no verification is made that an
 actual commit exists.
 
 Commit links consist of a complete 40 character SHA hash and may optionally be
-prefaced by `{user}@` or `{user/project}@`. `{user}` and `{project}` will use
-the defaults defined in the configuration options if not provided. To avoid a 40
+prefaced by `{user}@` or `{user/repo}@`. `{user}` and `{repo}` will use the
+defaults defined in the configuration options if not provided. To avoid a 40
 character hash from being linked, wrap it in a code span.
 
-All issue links are assigned the `gh-commit` class.
+All commit links are assigned the `gh-commit` class.
 
 The following table provides various examples (with the defaults set as
-`user='user', project='project'`):
+`user='user', repo='repo'`):
 
-| shorthand                                          | href                                                                              | rendered result                                                                                                                                                     |
-| -------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `72df691791fb36f00cf5363fefe757c8d3042656`         | `https://github.com/user/project/commit/72df691791fb36f00cf5363fefe757c8d3042656` | [72df691](https://github.com/user/project/commit/72df691791fb36f00cf5363fefe757c8d3042656 "GitHub Commit: user/project@72df691791fb36f00cf5363fefe757c8d3042656")   |
-| `foo@72df691791fb36f00cf5363fefe757c8d3042656`     | `https://github.com/foo/project/commit/72df691791fb36f00cf5363fefe757c8d3042656`  | [foo@72df691](https://github.com/foo/project/commit/72df691791fb36f00cf5363fefe757c8d3042656 "GitHub Commit: foo/project@72df691791fb36f00cf5363fefe757c8d3042656") |
-| `foo/bar@72df691791fb36f00cf5363fefe757c8d3042656` | `https://github.com/foo/bar/commit/72df691791fb36f00cf5363fefe757c8d3042656`      | [foo/bar@72df691](https://github.com/foo/bar/commit/72df691791fb36f00cf5363fefe757c8d3042656 "GitHub Commit: foo/bar@72df691791fb36f00cf5363fefe757c8d3042656")     |
-| `` `72df691791fb36f00cf5363fefe757c8d3042656` ``   |                                                                                   | `72df691791fb36f00cf5363fefe757c8d3042656`                                                                                                                          |
+| shorthand                                          | href                                                                              | rendered result                                                                                                                                                 |
+| -------------------------------------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `72df691791fb36f00cf5363fefe757c8d3042656`         | `https://github.com/user/repo/commit/72df691791fb36f00cf5363fefe757c8d3042656`    | [72df691](https://github.com/user/repo/commit/72df691791fb36f00cf5363fefe757c8d3042656 "GitHub Commit: user/repo@72df691791fb36f00cf5363fefe757c8d3042656")     |
+| `foo@72df691791fb36f00cf5363fefe757c8d3042656`     | `https://github.com/foo/repo/commit/72df691791fb36f00cf5363fefe757c8d3042656`     | [foo@72df691](https://github.com/foo/repo/commit/72df691791fb36f00cf5363fefe757c8d3042656 "GitHub Commit: foo/repo@72df691791fb36f00cf5363fefe757c8d3042656")   |
+| `foo/bar@72df691791fb36f00cf5363fefe757c8d3042656` | `https://github.com/foo/bar/commit/72df691791fb36f00cf5363fefe757c8d3042656`      | [foo/bar@72df691](https://github.com/foo/bar/commit/72df691791fb36f00cf5363fefe757c8d3042656 "GitHub Commit: foo/bar@72df691791fb36f00cf5363fefe757c8d3042656") |
+| `` `72df691791fb36f00cf5363fefe757c8d3042656` ``   |                                                                                   | `72df691791fb36f00cf5363fefe757c8d3042656`                                                                                                                      |
 
 ## License
 

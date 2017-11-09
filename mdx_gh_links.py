@@ -38,7 +38,7 @@ from markdown.util import etree
 URL_BASE = 'https://github.com'
 RE_PARTS = dict(
     USER=r'[-_\w]{1,39}\b',
-    PROJECT=r'[-_.\w]+\b'
+    REPO=r'[-_.\w]+\b'
 )
 
 
@@ -53,17 +53,17 @@ def _build_link(label, title, href, classes):
 
 class MentionPattern(Pattern):
     def __init__(self, config, md):
-        MENTION_RE = r'(@({USER})(?:\/({PROJECT}))?)'.format(**RE_PARTS)
+        MENTION_RE = r'(@({USER})(?:\/({REPO}))?)'.format(**RE_PARTS)
         super(MentionPattern, self).__init__(MENTION_RE, md)
         self.config = config
 
     def handleMatch(self, m):
         label = m.group(2)
         user = m.group(3)
-        project = m.group(4)
-        if project:
-            title = 'GitHub Project: @{0}/{1}'.format(user, project)
-            href = '{0}/{1}/{2}'.format(URL_BASE, user, project)
+        repo = m.group(4)
+        if repo:
+            title = 'GitHub Repository: @{0}/{1}'.format(user, repo)
+            href = '{0}/{1}/{2}'.format(URL_BASE, user, repo)
         else:
             title = 'GitHub User: @{0}'.format(user)
             href = '{0}/{1}'.format(URL_BASE, user)
@@ -72,29 +72,29 @@ class MentionPattern(Pattern):
 
 class IssuePattern(Pattern):
     def __init__(self, config, md):
-        ISSUE_RE = r'((?:({USER})\/({PROJECT}))?#([0-9]+))'.format(**RE_PARTS)
+        ISSUE_RE = r'((?:({USER})\/({REPO}))?#([0-9]+))'.format(**RE_PARTS)
         super(IssuePattern, self).__init__(ISSUE_RE, md)
         self.config = config
 
     def handleMatch(self, m):
         label = m.group(2)
         user = m.group(3) or self.config['user']
-        project = m.group(4) or self.config['project']
+        repo = m.group(4) or self.config['repo']
         num = m.group(5).lstrip('0')
-        title = 'GitHub Issue {0}/{1} #{2}'.format(user, project, num)
-        href = '{0}/{1}/{2}/issues/{3}'.format(URL_BASE, user, project, num)
+        title = 'GitHub Issue {0}/{1} #{2}'.format(user, repo, num)
+        href = '{0}/{1}/{2}/issues/{3}'.format(URL_BASE, user, repo, num)
         return _build_link(label, title, href, 'gh-link gh-issue')
 
 
 class CommitPattern(Pattern):
     def __init__(self, config, md):
-        COMMIT_RE = r'((?:({USER})(?:\/({PROJECT}))?@|\b)([a-f0-9]{{40}})\b)'.format(**RE_PARTS)
+        COMMIT_RE = r'((?:({USER})(?:\/({REPO}))?@|\b)([a-f0-9]{{40}})\b)'.format(**RE_PARTS)
         super(CommitPattern, self).__init__(COMMIT_RE, md)
         self.config = config
 
     def handleMatch(self, m):
         user = m.group(3)
-        project = m.group(4) or self.config['project']
+        repo = m.group(4) or self.config['repo']
         commit = m.group(5)
         short = commit[:7]
         if user:
@@ -102,8 +102,8 @@ class CommitPattern(Pattern):
         else:
             label = short
             user = self.config['user']
-        title = 'GitHub Commit: {0}/{1}@{2}'.format(user, project, commit)
-        href = '{0}/{1}/{2}/commit/{3}'.format(URL_BASE, user, project, commit)
+        title = 'GitHub Commit: {0}/{1}@{2}'.format(user, repo, commit)
+        href = '{0}/{1}/{2}/commit/{3}'.format(URL_BASE, user, repo, commit)
         return _build_link(label, title, href, 'gh-link gh-commit')
 
 
@@ -111,7 +111,7 @@ class GithubLinks(Extension):
     def __init__(self, *args, **kwargs):
         self.config = {
             'user': ['', 'GitHub user or organization.'],
-            'project': ['', 'Project name.']
+            'repo': ['', 'Repository name.']
         }
         super(GithubLinks, self).__init__(*args, **kwargs)
 
