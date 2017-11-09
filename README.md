@@ -73,19 +73,19 @@ title of a link.
 
 Mentions use the format `@{user}` to link to a user or organization and
 `@{user}/{project}` to link to a project. The defaults defined in the
-configuration options are ignored by mentions. An mention may be escaped by
+configuration options are ignored by mentions. A mention may be escaped by
 adding a backslash immediately before the at sign (`@`).
 
 All mentions are assigned the `gh-mention` class.
 
 The following table provides some examples:
 
-| shorthand  | href                         | rendered result                                                                     |
-| ---------- | -----------------------------| ------------------------------------------------------------------|
-| `@foo`     | `https://github.com/foo`     | [@foo](https://github.com/foo "GitHub User: @foo")                |
-| `@foo/bar` | `https://github.com/foo/bar` | [@foo/bar](https://github.com/foo/bar "GitHub Project: @foo/bar") |
-| `\@123`    |                              | @foo                                                              |
-| `\@foo/bar |                              | @foo/bar                                                          |
+| shorthand   | href                         | rendered result                                                                     |
+| ----------- | ---------------------------- | ------------------------------------------------------------------|
+| `@foo`      | `https://github.com/foo`     | [@foo](https://github.com/foo "GitHub User: @foo")                |
+| `@foo/bar`  | `https://github.com/foo/bar` | [@foo/bar](https://github.com/foo/bar "GitHub Project: @foo/bar") |
+| `\@123`     |                              | @foo                                                              |
+| `\@foo/bar` |                              | @foo/bar                                                          |
 
 ### Issues
 
@@ -117,7 +117,7 @@ This feature is *not yet implemented*.
 
 ## License
 
-The Python-Markdown Github-Links Extension is licended under the [BSD License] as
+The Python-Markdown Github-Links Extension is licensed under the [BSD License] as
 defined in `LICENSE`.
 
 [BSD License]: http://opensource.org/licenses/BSD-3-Clause
