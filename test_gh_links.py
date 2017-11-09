@@ -147,6 +147,38 @@ class TestGithubLinks(unittest.TestCase):
             '<p>User @foo/bar.</p>',
         )
 
+    # Commit Tests
+    def test_commit(self):
+        self.assertMarkdownRenders(
+            'Commit 83fb46b3b7ab8ad4316681fc4637c521da265f1d.',
+            '<p>Commit <a class="gh-link gh-commit" '
+            'href="https://github.com/Python-Markdown/github-links/commit/83fb46b3b7ab8ad4316681fc4637c521da265f1d" '
+            'title="GitHub Commit: Python-Markdown/github-links@83fb46b3b7ab8ad4316681fc4637c521da265f1d"'
+            '>83fb46b</a>.</p>',
+        )
+
+    def test_commit_user(self):
+        self.assertMarkdownRenders(
+            'Commit foo@15abb8b3b02df0e380e9b4c71f3bd206c9751a93.',
+            '<p>Commit <a class="gh-link gh-commit" '
+            'href="https://github.com/foo/github-links/commit/15abb8b3b02df0e380e9b4c71f3bd206c9751a93" '
+            'title="GitHub Commit: foo/github-links@15abb8b3b02df0e380e9b4c71f3bd206c9751a93"''>foo@15abb8b</a>.</p>',
+        )
+
+    def test_commit_user_project(self):
+        self.assertMarkdownRenders(
+            'Commit foo/bar@a75944f869d728ca9bc5472daf3f249b6c341308.',
+            '<p>Commit <a class="gh-link gh-commit" '
+            'href="https://github.com/foo/bar/commit/a75944f869d728ca9bc5472daf3f249b6c341308" '
+            'title="GitHub Commit: foo/bar@a75944f869d728ca9bc5472daf3f249b6c341308">foo/bar@a75944f</a>.</p>',
+        )
+
+    def test_escape_commit(self):
+        self.assertMarkdownRenders(
+            'Commit `83fb46b3b7ab8ad4316681fc4637c521da265f1d`.',
+            '<p>Commit <code>83fb46b3b7ab8ad4316681fc4637c521da265f1d</code>.</p>',
+        )
+
 
 if __name__ == '__main__':
     unittest.main()
