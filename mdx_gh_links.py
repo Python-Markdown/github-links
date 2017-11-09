@@ -38,8 +38,36 @@ from markdown.util import etree
 URL_BASE = 'https://github.com'
 RE_PARTS = dict(
     USER=r'[-_\w]+',
-    PROJECT=r'[-_.\w]+'
+    PROJECT=r'[-_.\w]+\b'
 )
+
+
+def _build_link(label, title, href, classes):
+    el = etree.Element('a')
+    el.text = label
+    el.set('title', title)
+    el.set('href', href)
+    el.set('class', classes)
+    return el
+
+
+class MentionPattern(Pattern):
+    def __init__(self, config, md):
+        MENTION_RE = r'(@({USER})(?:\/({PROJECT}))?)'.format(**RE_PARTS)
+        super(MentionPattern, self).__init__(MENTION_RE, md)
+        self.config = config
+
+    def handleMatch(self, m):
+        label = m.group(2)
+        user = m.group(3)
+        project = m.group(4)
+        if project:
+            title = 'GitHub Project: @{0}/{1}'.format(user, project)
+            href = '{0}/{1}/{2}'.format(URL_BASE, user, project)
+        else:
+            title = 'GitHub User: @{0}'.format(user)
+            href = '{0}/{1}'.format(URL_BASE, user)
+        return _build_link(label, title, href, 'gh-link gh-mention')
 
 
 class IssuePattern(Pattern):
@@ -53,15 +81,9 @@ class IssuePattern(Pattern):
         user = m.group(3) or self.config['user']
         project = m.group(4) or self.config['project']
         num = m.group(5).lstrip('0')
-
-        el = etree.Element('a')
-        el.text = label
         title = 'GitHub Issue {0}/{1} #{2}'.format(user, project, num)
-        el.set('title', title)
         href = '{0}/{1}/{2}/issues/{3}'.format(URL_BASE, user, project, num)
-        el.set('href', href)
-        el.set('class', 'gh-link gh-issue')
-        return el
+        return _build_link(label, title, href, 'gh-link gh-issue')
 
 
 class GithubLinks(Extension):
@@ -73,7 +95,9 @@ class GithubLinks(Extension):
         super(GithubLinks, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
+        md.ESCAPED_CHARS.append('@')
         md.inlinePatterns['issue'] = IssuePattern(self.getConfigs(), md)
+        md.inlinePatterns['mention'] = MentionPattern(self.getConfigs(), md)
 
 
 def makeExtension(*args, **kwargs):
