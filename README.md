@@ -113,7 +113,25 @@ The following table provides various examples (with the defaults set as
 
 ### Commits
 
-This feature is *not yet implemented*.
+Link directly to a GitHub Commit. Note that no verification is made that an
+actual commit exists.
+
+Commit links consist of a complete 40 character SHA hash and may optionally be
+prefaced by `{user}@` or `{user/project}@`. `{user}` and `{project}` will use
+the defaults defined in the configuration options if not provided. To avoid a 40
+character hash from being linked, wrap it in a code span.
+
+All issue links are assigned the `gh-commit` class.
+
+The following table provides various examples (with the defaults set as
+`user='user', project='project'`):
+
+| shorthand                                          | href                                                                              | rendered result                                                                                                                                                     |
+| -------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `72df691791fb36f00cf5363fefe757c8d3042656`         | `https://github.com/user/project/commit/72df691791fb36f00cf5363fefe757c8d3042656` | [72df691](https://github.com/user/project/commit/72df691791fb36f00cf5363fefe757c8d3042656 "GitHub Commit: user/project@72df691791fb36f00cf5363fefe757c8d3042656")   |
+| `foo@72df691791fb36f00cf5363fefe757c8d3042656`     | `https://github.com/foo/project/commit/72df691791fb36f00cf5363fefe757c8d3042656`  | [foo@72df691](https://github.com/foo/project/commit/72df691791fb36f00cf5363fefe757c8d3042656 "GitHub Commit: foo/project@72df691791fb36f00cf5363fefe757c8d3042656") |
+| `foo/bar@72df691791fb36f00cf5363fefe757c8d3042656` | `https://github.com/foo/bar/commit/72df691791fb36f00cf5363fefe757c8d3042656`      | [foo/bar@72df691](https://github.com/foo/bar/commit/72df691791fb36f00cf5363fefe757c8d3042656 "GitHub Commit: foo/bar@72df691791fb36f00cf5363fefe757c8d3042656")     |
+| `` `72df691791fb36f00cf5363fefe757c8d3042656` ``   |                                                                                   | `72df691791fb36f00cf5363fefe757c8d3042656`                                                                                                                          |
 
 ## License
 

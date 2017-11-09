@@ -37,7 +37,7 @@ from markdown.util import etree
 
 URL_BASE = 'https://github.com'
 RE_PARTS = dict(
-    USER=r'[-_\w]+',
+    USER=r'[-_\w]{1,39}\b',
     PROJECT=r'[-_.\w]+\b'
 )
 
@@ -86,6 +86,27 @@ class IssuePattern(Pattern):
         return _build_link(label, title, href, 'gh-link gh-issue')
 
 
+class CommitPattern(Pattern):
+    def __init__(self, config, md):
+        COMMIT_RE = r'((?:({USER})(?:\/({PROJECT}))?@|\b)([a-f0-9]{{40}})\b)'.format(**RE_PARTS)
+        super(CommitPattern, self).__init__(COMMIT_RE, md)
+        self.config = config
+
+    def handleMatch(self, m):
+        user = m.group(3)
+        project = m.group(4) or self.config['project']
+        commit = m.group(5)
+        short = commit[:7]
+        if user:
+            label = '{0}@{1}'.format(m.group(2).split('@')[0], short)
+        else:
+            label = short
+            user = self.config['user']
+        title = 'GitHub Commit: {0}/{1}@{2}'.format(user, project, commit)
+        href = '{0}/{1}/{2}/commit/{3}'.format(URL_BASE, user, project, commit)
+        return _build_link(label, title, href, 'gh-link gh-commit')
+
+
 class GithubLinks(Extension):
     def __init__(self, *args, **kwargs):
         self.config = {
@@ -98,6 +119,7 @@ class GithubLinks(Extension):
         md.ESCAPED_CHARS.append('@')
         md.inlinePatterns['issue'] = IssuePattern(self.getConfigs(), md)
         md.inlinePatterns['mention'] = MentionPattern(self.getConfigs(), md)
+        md.inlinePatterns['commit'] = CommitPattern(self.getConfigs(), md)
 
 
 def makeExtension(*args, **kwargs):
