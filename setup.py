@@ -35,7 +35,7 @@ from setuptools import setup
 
 
 setup(
-    name='Python-Markdown Github Links',
+    name='mdx_gh_links',
     description='An extension to Python-Markdown which adds support for '
     'shorthand links to GitHub users, repositories, issues and commits.',
     version='0.1',

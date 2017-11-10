@@ -142,6 +142,6 @@ defined in `LICENSE`.
 
 ## Change Log
 
-### Version 0.0.1 (2017/11/??)
+### Version 0.0.1 (2017/11/10)
 
 The initial release.
