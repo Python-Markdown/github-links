@@ -84,7 +84,7 @@ The following table provides some examples:
 | ----------- | ---------------------------- | -------------------------------------------------------------------- |
 | `@foo`      | `https://github.com/foo`     | [@foo](https://github.com/foo "GitHub User: @foo")                   |
 | `@foo/bar`  | `https://github.com/foo/bar` | [@foo/bar](https://github.com/foo/bar "GitHub Repository: @foo/bar") |
-| `\@123`     |                              | @foo                                                                 |
+| `\@foo`     |                              | @foo                                                                 |
 | `\@foo/bar` |                              | @foo/bar                                                             |
 
 ### Issues
@@ -142,6 +142,6 @@ defined in `LICENSE`.
 
 ## Change Log
 
-### Version 0.0.1 (2017/11/10)
+### Version 0.1 (2017/11/10)
 
 The initial release.
