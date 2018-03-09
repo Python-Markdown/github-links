@@ -142,7 +142,7 @@ defined in `LICENSE`.
 
 ## Change Log
 
-### Dev Version
+### Version 0.2 (2018/03/09)
 
 Ignore mentions/issues/commits within Markdown links.
 

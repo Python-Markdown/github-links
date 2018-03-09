@@ -4,7 +4,7 @@ Github Links - A Python-Markdown Extension.
 
 BSD License
 
-Copyright (c) 2017 by Waylan Limberg. All rights reserved.
+Copyright (c) 2017-2018 by Waylan Limberg. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -38,7 +38,7 @@ setup(
     name='mdx_gh_links',
     description='An extension to Python-Markdown which adds support for '
     'shorthand links to GitHub users, repositories, issues and commits.',
-    version='0.1',
+    version='0.2',
     author='Waylan Limberg',
     author_email='waylan.limberg@icloud.com',
     url='https://github.com/Python-Markdown/github-links/',
