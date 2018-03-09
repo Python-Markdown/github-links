@@ -102,6 +102,12 @@ class TestGithubLinks(unittest.TestCase):
             '<p>Issue Organization/Repo#123.</p>',
         )
 
+    def test_issue_in_link(self):
+        self.assertMarkdownRenders(
+            '[Issue #123](#).',
+            '<p><a href="#">Issue #123</a>.</p>',
+        )
+
     # Mention Tests
     def test_mention_user(self):
         self.assertMarkdownRenders(
@@ -147,6 +153,12 @@ class TestGithubLinks(unittest.TestCase):
             '<p>User @foo/bar.</p>',
         )
 
+    def test_mention_in_link(self):
+        self.assertMarkdownRenders(
+            'User [@foo](#).',
+            '<p>User <a href="#">@foo</a>.</p>',
+        )
+
     # Commit Tests
     def test_commit(self):
         self.assertMarkdownRenders(
@@ -177,6 +189,12 @@ class TestGithubLinks(unittest.TestCase):
         self.assertMarkdownRenders(
             'Commit `83fb46b3b7ab8ad4316681fc4637c521da265f1d`.',
             '<p>Commit <code>83fb46b3b7ab8ad4316681fc4637c521da265f1d</code>.</p>',
+        )
+
+    def test_commit_in_link(self):
+        self.assertMarkdownRenders(
+            'Commit [83fb46b3b7ab8ad4316681fc4637c521da265f1d](#).',
+            '<p>Commit <a href="#">83fb46b3b7ab8ad4316681fc4637c521da265f1d</a>.</p>',
         )
 
 

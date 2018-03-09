@@ -44,7 +44,7 @@ setup(
     url='https://github.com/Python-Markdown/github-links/',
     license='BSD License',
     py_modules=['mdx_gh_links'],
-    install_requires=['markdown>=2.5'],
+    install_requires=['markdown>=2.6.11'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: BSD License',

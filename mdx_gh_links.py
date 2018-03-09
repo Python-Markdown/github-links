@@ -52,6 +52,8 @@ def _build_link(label, title, href, classes):
 
 
 class MentionPattern(Pattern):
+    ANCESTOR_EXCLUDES = ('a',)
+
     def __init__(self, config, md):
         MENTION_RE = r'(@({USER})(?:\/({REPO}))?)'.format(**RE_PARTS)
         super(MentionPattern, self).__init__(MENTION_RE, md)
@@ -71,6 +73,8 @@ class MentionPattern(Pattern):
 
 
 class IssuePattern(Pattern):
+    ANCESTOR_EXCLUDES = ('a',)
+
     def __init__(self, config, md):
         ISSUE_RE = r'((?:({USER})\/({REPO}))?#([0-9]+))'.format(**RE_PARTS)
         super(IssuePattern, self).__init__(ISSUE_RE, md)
@@ -87,6 +91,8 @@ class IssuePattern(Pattern):
 
 
 class CommitPattern(Pattern):
+    ANCESTOR_EXCLUDES = ('a',)
+
     def __init__(self, config, md):
         COMMIT_RE = r'((?:({USER})(?:\/({REPO}))?@|\b)([a-f0-9]{{40}})\b)'.format(**RE_PARTS)
         super(CommitPattern, self).__init__(COMMIT_RE, md)
@@ -122,5 +128,5 @@ class GithubLinks(Extension):
         md.inlinePatterns['commit'] = CommitPattern(self.getConfigs(), md)
 
 
-def makeExtension(*args, **kwargs):
+def makeExtension(*args, **kwargs):  # pragma: no cover
     return GithubLinks(*args, **kwargs)
