@@ -32,7 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 from markdown.extensions import Extension
 from markdown.inlinepatterns import Pattern
-from markdown.util import etree
+from xml.etree import ElementTree
 
 
 URL_BASE = 'https://github.com'
@@ -43,7 +43,7 @@ RE_PARTS = dict(
 
 
 def _build_link(label, title, href, classes):
-    el = etree.Element('a')
+    el = ElementTree.Element('a')
     el.text = label
     el.set('title', title)
     el.set('href', href)
@@ -121,11 +121,11 @@ class GithubLinks(Extension):
         }
         super(GithubLinks, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         md.ESCAPED_CHARS.append('@')
-        md.inlinePatterns['issue'] = IssuePattern(self.getConfigs(), md)
-        md.inlinePatterns['mention'] = MentionPattern(self.getConfigs(), md)
-        md.inlinePatterns['commit'] = CommitPattern(self.getConfigs(), md)
+        md.inlinePatterns.register(IssuePattern(self.getConfigs(), md), 'issue', 20)
+        md.inlinePatterns.register(MentionPattern(self.getConfigs(), md), 'mention', 20)
+        md.inlinePatterns.register(CommitPattern(self.getConfigs(), md), 'commit', 20)
 
 
 def makeExtension(*args, **kwargs):  # pragma: no cover
