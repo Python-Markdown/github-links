@@ -92,13 +92,13 @@ class TestGithubLinks(unittest.TestCase):
 
     def test_escaped_issue(self):
         self.assertMarkdownRenders(
-            'Issue \#123.',
+            'Issue \\#123.',
             '<p>Issue #123.</p>',
         )
 
     def test_escaped_issue_with_repo(self):
         self.assertMarkdownRenders(
-            'Issue Organization/Repo\#123.',
+            'Issue Organization/Repo\\#123.',
             '<p>Issue Organization/Repo#123.</p>',
         )
 
@@ -127,7 +127,7 @@ class TestGithubLinks(unittest.TestCase):
 
     def test_escape_mention_user(self):
         self.assertMarkdownRenders(
-            'User \@foo.',
+            'User \\@foo.',
             '<p>User @foo.</p>',
         )
 
@@ -149,7 +149,7 @@ class TestGithubLinks(unittest.TestCase):
 
     def test_escape_mention_repo(self):
         self.assertMarkdownRenders(
-            'User \@foo/bar.',
+            'User \\@foo/bar.',
             '<p>User @foo/bar.</p>',
         )
 
