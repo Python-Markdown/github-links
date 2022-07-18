@@ -142,6 +142,10 @@ defined in `LICENSE`.
 
 ## Change Log
 
+### Version 0.3 (2022/07/18)
+
+Update dependencies.
+
 ### Version 0.2 (2018/03/09)
 
 Ignore mentions/issues/commits within Markdown links.
