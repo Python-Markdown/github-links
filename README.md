@@ -142,6 +142,10 @@ defined in `LICENSE`.
 
 ## Change Log
 
+### Version 0.3.1 (2023/07/28)
+
+Include README in release.
+
 ### Version 0.3 (2022/07/18)
 
 Update dependencies.

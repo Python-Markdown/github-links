@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = 'mdx_gh_links'
-version = '0.3'
+version = '0.3.1'
 description = "An extension to Python-Markdown which adds support for shorthand links to GitHub users, repositories, issues and commits."
 readme = {file = 'README.md', content-type='text/markdown'}
 authors = [
