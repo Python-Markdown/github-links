@@ -1,0 +1,8 @@
+{
+  // Markdownlint rules
+  "config": {
+    "default": true,
+    # Disable line length check for tables and code blocks
+    "MD013": { "line_length": 80, "code_blocks": false, "tables": false},
+  }
+}
