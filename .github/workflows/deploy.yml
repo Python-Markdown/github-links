@@ -3,16 +3,15 @@ name: deploy
 on:
   push:
     tags:
-    - '*'
+      - "*"
 
 jobs:
-
   pypi:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.11
       - name: Install dependencies
@@ -23,7 +22,7 @@ jobs:
           python -m build
       - name: Publish
         if: success()
-        uses: pypa/gh-action-pypi-publish@v1.1.0
+        uses: pypa/gh-action-pypi-publish@v1.8.11
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
