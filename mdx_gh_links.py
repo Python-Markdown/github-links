@@ -35,7 +35,6 @@ from markdown.inlinepatterns import Pattern
 from xml.etree import ElementTree
 
 
-URL_BASE = 'https://github.com'
 RE_PARTS = dict(
     USER=r'[-_\w]{1,39}\b',
     REPO=r'[-_.\w]+\b'
@@ -65,10 +64,10 @@ class MentionPattern(Pattern):
         repo = m.group(4)
         if repo:
             title = 'GitHub Repository: @{0}/{1}'.format(user, repo)
-            href = '{0}/{1}/{2}'.format(URL_BASE, user, repo)
+            href = '{0}/{1}/{2}'.format(self.config['domain'], user, repo)
         else:
             title = 'GitHub User: @{0}'.format(user)
-            href = '{0}/{1}'.format(URL_BASE, user)
+            href = '{0}/{1}'.format(self.config['domain'], user)
         return _build_link(label, title, href, 'gh-link gh-mention')
 
 
@@ -86,7 +85,7 @@ class IssuePattern(Pattern):
         repo = m.group(4) or self.config['repo']
         num = m.group(5).lstrip('0')
         title = 'GitHub Issue {0}/{1} #{2}'.format(user, repo, num)
-        href = '{0}/{1}/{2}/issues/{3}'.format(URL_BASE, user, repo, num)
+        href = '{0}/{1}/{2}/issues/{3}'.format(self.config['domain'], user, repo, num)
         return _build_link(label, title, href, 'gh-link gh-issue')
 
 
@@ -109,13 +108,14 @@ class CommitPattern(Pattern):
             label = short
             user = self.config['user']
         title = 'GitHub Commit: {0}/{1}@{2}'.format(user, repo, commit)
-        href = '{0}/{1}/{2}/commit/{3}'.format(URL_BASE, user, repo, commit)
+        href = '{0}/{1}/{2}/commit/{3}'.format(self.config['domain'], user, repo, commit)
         return _build_link(label, title, href, 'gh-link gh-commit')
 
 
 class GithubLinks(Extension):
     def __init__(self, *args, **kwargs):
         self.config = {
+            'domain': ['https://github.com', 'GitHub domain or Enterprise Server domain'],
             'user': ['', 'GitHub user or organization.'],
             'repo': ['', 'Repository name.']
         }
