@@ -147,7 +147,7 @@ defined in `LICENSE`.
 
 ## Change Log
 
-### Version 0.4 (unreleased)
+### Version 0.4 (2023/12/22)
 
 Add `domain` configuration option in order to support GitHub Enterprise Servers.
 
