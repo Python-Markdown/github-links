@@ -56,6 +56,11 @@ a GitHub link, then the value of this option will be used.
 A GitHub repository. If no repository is specified in a GitHub link, then the
 value of this option will be used.
 
+### domain
+
+The domain of the host server for the repository. Defaults to
+`https://github.com`, but may be set to the root of a GitHub Enterprise Server.
+
 ## Syntax
 
 This extension implements shorthand to specify links to GitHub in various ways.
@@ -141,6 +146,10 @@ defined in `LICENSE`.
 [BSD License]: http://opensource.org/licenses/BSD-3-Clause
 
 ## Change Log
+
+### Version 0.4 (unreleased)
+
+Add `domain` configuration option in order to support GitHub Enterprise Servers.
 
 ### Version 0.3.1 (2023/07/28)
 
